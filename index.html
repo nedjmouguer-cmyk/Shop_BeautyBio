@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIOAQUA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff, #ffe6f0, #f0e6ff);
+    padding-bottom: 120px;
+}
+
+/* TOP BAR */
+.top-bar {
+    background: red;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {opacity: 0.6;}
+}
+
+/* TITLE */
+h1 {
+    font-size: 36px;
+    margin-top: 20px;
+}
+
+/* TIMER */
+#timer {
+    color: red;
+    font-weight: bold;
+}
+
+/* PRODUCTS */
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.box, .gold-box {
+    width: 260px;
+    padding: 20px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: 0.3s;
+    position: relative;
+}
+
+.box:hover, .gold-box:hover {
+    transform: scale(1.05);
+}
+
+.gold-box {
+    background: linear-gradient(135deg, #fff8dc, #ffd700);
+}
+
+/* IMAGE */
+.product-img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* PRICE */
+.price {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* STOCK */
+.stock {
+    font-size: 14px;
+    color: red;
+    font-weight: bold;
+}
+
+/* DELIVERY */
+.delivery {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: green;
+}
+
+/* RATING */
+.rating {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* GOLD LABEL */
+.gold-label {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: gold;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* BUTTON */
+.order-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(270deg, #ff0080, #ff8c00, #40e0d0, #8a2be2);
+    background-size: 800% 800%;
+    animation: move 5s infinite;
+}
+
+.order-btn:active {
+    transform: scale(0.95);
+}
+
+@keyframes move {
+    0% {background-position: 0%;}
+    50% {background-position: 100%;}
+    100% {background-position: 0%;}
+}
+
+/* RESULTS */
+.results {
+    margin-top: 60px;
+}
+
+.results-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* 🔥 تم تصغير الصور هنا */
+.result-box img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.result-box img:hover {
+    transform: scale(1.1);
+}
+
+/* WHY */
+.why {
+    margin-top: 40px;
+    padding: 0 20px;
+}
+
+/* POPUP */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+}
+
+.popup-content {
+    background: white;
+    width: 300px;
+    margin: 120px auto;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.popup input {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.popup button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    background: green;
+    color: white;
+    font-weight: bold;
+}
+
+.close-btn {
+    background: red;
+    margin-top: 10px;
+}
+
+/* NOTIFICATION */
+#notification {
+    position: fixed;
+    bottom: 80px;
+    left: 10px;
+    background: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    display: none;
+}
+
+/* WHATSAPP */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25D366;
+    padding: 15px 20px;
+    border-radius: 50px;
+}
+
+.whatsapp-btn a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">🔥 عرض محدود - الكمية قليلة جداً 🔥</div>
+
+<h1>BIOAQUA<br>كريم التبييض الفوري</h1>
+
+<h2 id="timer"></h2>
+
+<div class="container">
+
+<div class="box">
+<div class="rating">⭐ 4.5</div>
+<img class="product-img" src="https://i.postimg.cc/kDrzFJ1Q/Screenshot-20260414-011943-Gallery.jpg">
+<h3>علبة واحدة</h3>
+<p class="price">3000 دج</p>
+<div class="delivery">🚚 توصيل مجاني</div>
+<div class="stock">باقي 7 فقط</div>
+<button class="order-btn" onclick="openPopup('علبة واحدة')">اطلب الآن</button>
+</div>
+
+<div class="gold-box">
+<div class="rating">⭐ 4.8</div>
+<div class="gold-label">GOLD</div>
+<img class="product-img" src="https://i.postimg.cc/kDrzFJ1Q/Screenshot-20260414-011943-Gallery.jpg">
+<h3>2 علب</h3>
+<p class="price">5500 دج</p>
+<div class="delivery">🚚 توصيل مجاني</div>
+<div class="stock">الأكثر طلباً 🔥</div>
+<button class="order-btn" onclick="openPopup('2 علب')">اطلب الآن</button>
+</div>
+
+</div>
+
+<div class="results">
+<h2>نتائج المنتج</h2>
+<div class="results-container">
+<div class="result-box">
+<img src="https://i.postimg.cc/g2n7nBYj/Screenshot-20260413-204751-Gallery.jpg">
+</div>
+<div class="result-box">
+<img src="https://i.postimg.cc/prWGxsGm/Screenshot-20260413-204736-Gallery.jpg">
+</div>
+</div>
+</div>
+
+<div class="why">
+<h2>لماذا تختار BIOAQUA؟</h2>
+<p>✔ نتائج سريعة من أول استعمال</p>
+<p>✔ آمن على البشرة</p>
+<p>✔ توصيل مجاني لكل الولايات</p>
+</div>
+
+<div class="popup" id="popup">
+<div class="popup-content">
+<h3>إتمام الطلب</h3>
+<input type="text" id="name" placeholder="الاسم">
+<input type="text" id="state" placeholder="الولاية">
+<input type="text" id="phone" placeholder="رقم الهاتف">
+<button onclick="sendOrder()">إرسال عبر واتساب</button>
+<button class="close-btn" onclick="closePopup()">رجوع</button>
+</div>
+</div>
+
+<div id="notification"></div>
+
+<div class="whatsapp-btn">
+<a href="https://wa.me/213XXXXXXXXX">💬 واتساب</a>
+</div>
+
+<script>
+let productName = "";
+
+function openPopup(product){
+    productName = product;
+    document.getElementById("popup").style.display = "block";
+}
+
+function closePopup(){
+    document.getElementById("popup").style.display = "none";
+}
+
+function sendOrder(){
+    let name = document.getElementById("name").value;
+    let state = document.getElementById("state").value;
+    let phone = document.getElementById("phone").value;
+
+    if(name === "" || state === "" || phone === ""){
+        alert("⚠ يرجى ملء جميع المعلومات");
+        return;
+    }
+
+    let msg =
+`طلب جديد:
+${productName}
+الاسم: ${name}
+الولاية: ${state}
+الهاتف: ${phone}`;
+
+    window.open("https://wa.me/213XXXXXXXXX?text=" + encodeURIComponent(msg));
+}
+
+/* TIMER */
+let time = 600;
+setInterval(() => {
+    let m = Math.floor(time / 60);
+    let s = time % 60;
+    document.getElementById("timer").innerHTML =
+    "⏳ العرض ينتهي خلال: " + m + ":" + (s<10?"0":"") + s;
+    time--;
+}, 1000);
+
+/* NOTIFICATION */
+let names = ["محمد","سارة","أحمد","ياسمين","كريم"];
+
+setInterval(() => {
+    let n = names[Math.floor(Math.random()*names.length)];
+    let notif = document.getElementById("notification");
+    notif.innerHTML = n + " قام بالطلب 🔥";
+    notif.style.display = "block";
+
+    setTimeout(()=>{notif.style.display="none"},3000);
+
+},7000);
+</script>
+
+</body>
+</html>
