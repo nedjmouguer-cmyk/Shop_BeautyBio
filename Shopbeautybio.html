@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shop BeautyBio | كريم إبراز ومعالم الأنوثة الملكي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff0080; /* وردي كهربائي */
+            --secondary: #00c3ff; /* أزرق كهربائي */
+            --accent: #ffd700; /* ذهبي */
+            --bg-dark: #05080f; /* أسود عميق */
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .glow-bg {
+            position: fixed; border-radius: 50%; z-index: -1; filter: blur(120px); opacity: 0.2; pointer-events: none;
+        }
+
+        [data-reveal] {
+            opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        [data-reveal].active { opacity: 1; transform: translateY(0); }
+
+        .promo-bar {
+            background: linear-gradient(90deg, var(--primary), #8b5cf6, var(--secondary));
+            text-align: center; padding: 12px; font-size: 14px; font-weight: 700; text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); position: relative; z-index: 101;
+        }
+
+        header {
+            padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+            border-bottom: 1px solid var(--glass-border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 100; background: rgba(5, 8, 15, 0.8);
+        }
+
+        .brand-name { font-weight: 800; font-size: 1.5rem; letter-spacing: 2px; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+
+        .hero { padding: 80px 20px 60px; text-align: center; position: relative; }
+
+        .hero h1 {
+            font-size: 3.5rem; font-weight: 800; margin-bottom: 25px; line-height: 1.2;
+            background: linear-gradient(to right, #fff, #a7f3d0, var(--secondary), var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: titleGlow 4s linear infinite;
+        }
+
+        @keyframes titleGlow { 0%, 100% { text-shadow: 0 0 15px rgba(255,255,255,0.1); } 50% { text-shadow: 0 0 30px rgba(255,0,128,0.2); } }
+
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 40px; }
+
+        .timer-container { display: flex; justify-content: center; gap: 15px; margin: 40px 0; }
+        .timer-box {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+            padding: 20px; min-width: 90px; border-radius: 20px; backdrop-filter: blur(10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .timer-box span { display: block; font-size: 36px; font-weight: 800; color: var(--accent); line-height: 1; }
+        .timer-box label { font-size: 12px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+
+        .features {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px; padding: 60px 20px; max-width: 1000px; margin: 0 auto;
+        }
+        .feat-card {
+            background: var(--bg-card); padding: 25px; border-radius: 20px;
+            border: 1px solid var(--glass-border); transition: all 0.3s ease; text-align: center;
+        }
+        .feat-card:hover { transform: translateY(-8px); background: rgba(255,255,255,0.06); border-color: var(--secondary); }
+
+        .steps-section { padding: 80px 20px; background: rgba(255,255,255,0.01); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1100px; margin: 50px auto 0; }
+        .step-card { text-align: center; position: relative; padding: 20px; }
+        .step-icon { width: 70px; height: 70px; background: linear-gradient(45deg, var(--primary), var(--secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; margin: 0 auto 20px; box-shadow: 0 10px 20px rgba(255,0,128,0.2); }
+
+        .product-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+        .product-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border);
+            border-radius: 30px; width: 360px; padding: 25px; position: relative; overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .product-card:hover { transform: translateY(-15px); border-color: var(--secondary); box-shadow: 0 25px 50px rgba(0,195,255,0.15); }
+        .product-card.featured { border: 2px solid var(--primary); background: rgba(255,0,128,0.02); box-shadow: 0 15px 30px rgba(255,0,128,0.1); }
+
+        .badge {
+            position: absolute; top: 15px; right: 15px; background: var(--primary); color: white;
+            padding: 6px 18px; border-radius: 50px; font-size: 12px; font-weight: 700; letter-spacing: 1px;
+            box-shadow: 0 5px 10px rgba(255,0,128,0.3); z-index: 2;
+        }
+
+        .product-image-wrapper { width: 100%; height: 350px; border-radius: 20px; overflow: hidden; margin-bottom: 20px; position: relative; border: 1px solid var(--glass-border); }
+        .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .product-card:hover .product-image { transform: scale(1.08); }
+
+        .price-tag { font-size: 38px; font-weight: 800; color: var(--secondary); margin: 15px 0; text-shadow: 0 0 15px rgba(0,195,255,0.3); }
+        .currency { font-size: 18px; color: var(--text-muted); font-weight: 400; margin-right: 5px; }
+
+        .cta-button {
+            width: 100%; padding: 20px; border: none; border-radius: 18px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white; font-size: 18px; font-weight: 700; cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255,0,128,0.2); transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        .cta-button::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: 0.5s; }
+        .cta-button:hover::after { left: 100%; }
+        .cta-button:hover { box-shadow: 0 15px 30px rgba(255,0,128,0.4); transform: translateY(-3px); }
+
+        .results-section { padding: 100px 20px; text-align: center; position: relative; }
+        
+        .result-image { width: 100%; max-width: 500px; height: auto; border-radius: 25px; border: 2px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.4); margin-top: 50px; }
+
+        .review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1100px; margin: 60px auto 0; }
+        .review-card { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 20px; padding: 25px; backdrop-filter: blur(10px); position: relative; }
+        .review-card:hover { border-color: var(--accent); background: rgba(255,255,255,0.05); }
+        .reviewer-info { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+        .reviewer-avatar { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); background: #ccc; }
+        .stars { color: var(--accent); font-size: 16px; margin-bottom: 10px; }
+
+        .modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .modal-content { background: white; color: #111; padding: 40px; width: 92%; max-width: 480px; border-radius: 25px; position: relative; animation: modalZoom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center; }
+        @keyframes modalZoom { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .close-modal { position: absolute; top: 15px; left: 15px; cursor: pointer; font-size: 24px; color: var(--primary); background: none; border: none; }
+        .modal input { width: 100%; padding: 16px; margin: 10px 0; border-radius: 12px; border: 1px solid #ddd; font-size: 16px; outline: none; }
+        .modal input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(255,0,128,0.1); }
+        .submit-btn { width: 100%; padding: 18px; margin-top: 20px; background: #111; color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; transition: background 0.3s; }
+        .submit-btn:hover { background: #333; }
+
+        .section-title { text-align: center; font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; background: linear-gradient(to right, #fff, var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-subtitle { text-align: center; color: var(--text-muted); max-width: 550px; margin: 0 auto 50px; font-size: 1.1rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            .hero, .product-grid, .results-section { padding: 50px 15px; }
+            .product-card { width: 100%; max-width: 360px; }
+            .product-image-wrapper { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-bg" style="width: 350px; height: 350px; top: -100px; right: -100px; background: rgba(255,0,128,0.2);"></div>
+    <div class="glow-bg" style="width: 450px; height: 450px; bottom: 100px; left: -150px; background: rgba(0,195,255,0.15);"></div>
+
+    <div class="promo-bar">🔥 عرض خاص: شحن مجاني لكافة الولايات + الدفع عند الاستلام ينتهي قريباً!</div>
+
+    <header>
+        <div class="brand-name">shop BeautyBio</div>
+    </header>
+
+    <section class="hero">
+        <h1 data-reveal>جمالك + أنوثتك</h1>
+        <p data-reveal>Beauty Bio - السر الطبيعي لإبراز، شد، ونحت معالم أنوثتك بثقة وأمان.</p>
+
+        <div class="timer-container" data-reveal>
+            <div class="timer-box"><span id="hours">23</span><label>ساعة</label></div>
+            <div class="timer-box"><span id="minutes">59</span><label>دقيقة</label></div>
+            <div class="timer-box"><span id="seconds">59</span><label>ثانية</label></div>
+        </div>
+
+        <button class="cta-button" style="width: auto; padding: 20px 50px; margin-top: 20px;" onclick="document.getElementById('shop').scrollIntoView()" data-reveal>احصلي على العرض الآن</button>
+
+        <div class="features" data-reveal>
+            <div class="feat-card">🌿 مكونات نباتية وآمنة</div>
+            <div class="feat-card">✨ نتائج مرئية خلال أسابيع</div>
+            <div class="feat-card">🧪 مناسب لجميع أنواع البشرة</div>
+            <div class="feat-card">📦 الدفع آمن عند الاستلام</div>
+        </div>
+    </section>
+
+    <section class="steps-section">
+        <h2 class="section-title" data-reveal>خطوات بسيطة لجمال دائم</h2>
+        <p class="section-subtitle" data-reveal>الالتزام اليومي هو سر الحصول على أفضل النتائج. اتبعي هذه الخطوات:</p>
+        <div class="steps-grid">
+            <div class="step-card" data-reveal>
+                <div class="step-icon">1</div>
+                <h3>تجهيز المنطقة</h3>
+                <p style="color: var(--text-muted);">نظفي المنطقة جيداً وجففيها (يفضل بعد حمام دافئ).</p>
+            </div>
+            <div class="step-card" data-reveal>
+                <div class="step-icon">2</div>
+                <h3>تطبيق الكريم</h3>
+                <p style="color: var(--text-muted);">ضعي كمية مناسبة ودلكي بلطف بحركات دائرية حتى الامتصاص.</p>
+            </div>
+            <div class="step-card" data-reveal>
+                <div class="step-icon">3</div>
+                <h3>الاستمرار يومياً</h3>
+                <p style="color: var(--text-muted);">استخدميه مرة أو مرتين يومياً بانتظام لنتائج مذهلة.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="results-section">
+        <h2 class="section-title" data-reveal>الفرق الذي ستلاحظينه</h2>
+        <p class="section-subtitle" data-reveal>ابراز ونحت واضحين </p>
+        
+        <img src="https://i.ibb.co/NgrvHPSr/Screenshot-20260419-224447-Instagram.jpg" class="result-image" alt="نتائج كريم الأنوثة">
+    </section>
+
+    <section class="product-grid" id="shop">
+        <div class="product-card" data-reveal>
+            <div class="badge">الأكثر طلباً</div>
+            <div class="product-image-wrapper">
+                <img src="https://i.ibb.co/67RJPS44/Screenshot-20260420-000652-Facebook.jpg" class="product-image" alt="عبوة واحدة كريم Beauty Bio">
+            </div>
+            <h3>باقة العناية الفائقة</h3>
+            <p style="color: var(--text-muted); font-size: 14px; margin: 8px 0 15px;">تكفي لمدة شهر كامل من الاستخدام اليومي
+            العبوة الكبيرة 100غ.</p>
+            <div class="price-tag">4,800 <span class="currency">دج</span></div>
+            <button class="cta-button" onclick="openModal('باقة العناية الفائقة (علبة واحدة)')">اطلبي الآن</button>
+        </div>
+
+        <div class="product-card featured" data-reveal>
+            <div class="badge" style="background: var(--accent); color: black;">العرض الذهبي 🔥</div>
+            <div class="product-image-wrapper">
+                <img src="https://i.ibb.co/67RJPS44/Screenshot-20260420-000652-Facebook.jpg" class="product-image" alt="علبتين كريم Beauty Bio">
+            </div>
+            <h3>باقة التوفير الكاملة (علبتين)</h3>
+            <p style="color: var(--text-muted); font-size: 14px; margin: 8px 0 15px;">احصلي على علبتين بسعر مخفض وضمان نتائج تدوم طويلاً.</p>
+            <div class="price-tag">8,500 <span class="currency">دج</span></div>
+            <button class="cta-button" onclick="openModal('باقة التوفير الكاملة (علبتين)')">احصلي على العرض</button>
+        </div>
+    </section>
+
+    <section class="results-section" style="background: rgba(255,255,255,0.01);">
+        <h2 class="section-title" data-reveal>ماذا تقول الجميلات عنا؟</h2>
+        <p class="section-subtitle" data-reveal>ثقتكن هي سر نجاحنا. إليكِ بعض تجارب زبوناتنا.</p>
+        
+        <div class="review-grid">
+            <div class="review-card" data-reveal>
+                <div class="reviewer-info">
+                    <img src="https://i.pravatar.cc/150?u=sarah" class="reviewer-avatar" alt="زبونة">
+                    <div>
+                        <div style="font-weight: 700;">سارة ب.</div>
+                        <div style="color: var(--text-muted); font-size: 12px;">زبونة مؤكدة - الجزائر</div>
+                    </div>
+                </div>
+                <div class="stars">★★★★★</div>
+                <p style="color: #cbd5e1; font-size: 15px;">"كريم رائع بمعنى الكلمة! لاحظت فرقاً في شد وإبراز المناطق الأنثوية بعد أسبوعين فقط من الاستخدام. شكراً Beauty Bio!"</p>
+            </div>
+
+            <div class="review-card" data-reveal>
+                <div class="reviewer-info">
+                    <img src="https://i.pravatar.cc/150?u=lina" class="reviewer-avatar" alt="زبونة">
+                    <div>
+                        <div style="font-weight: 700;">لينا م.</div>
+                        <div style="color: var(--text-muted); font-size: 12px;">زبونة مؤكدة - وهران</div>
+                    </div>
+                </div>
+                <div class="stars">★★★★★</div>
+                <p style="color: #cbd5e1; font-size: 15px;">"أخذت عرض العلبتين، النتائج كانت أفضل مما توقعت. الكريم خفيف ورائحته جميلة ولا يسبب أي حساسية. أنصح به بشدة!"</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">✕</button>
+            <h2 style="margin-bottom: 10px; font-weight: 800; font-size: 1.6rem;">تأكيد طلبك 🛍️</h2>
+            <p id="product-name-display" style="color: var(--primary); font-weight: 700; font-size: 1.1rem; margin-bottom: 25px;"></p>
+            
+            <input type="text" id="name" placeholder="الاسم الكامل">
+            <input type="tel" id="phone" placeholder="رقم الهاتف">
+            <input type="text" id="wilaya" placeholder="الولاية / المدينة">
+            
+            <button class="submit-btn" onclick="sendToWhatsApp()">تأكيد الشراء عبر الواتساب</button>
+            <p style="text-align: center; font-size: 12px; margin-top: 15px; color: #777;">سنتصل بك هاتفياً لتأكيد العنوان قبل الشحن.</p>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 50px; color: var(--text-muted); border-top: 1px solid var(--glass-border); background: #030509; font-size: 14px;">
+        &copy; 2026 Beauty Bio الجزائر. جميع الحقوق محفوظة.
+    </footer>
+
+    <script>
+        function updateTimer() {
+            const now = new Date();
+            const endOfDay = new Date();
+            endOfDay.setHours(23, 59, 59, 999);
+            
+            let diff = endOfDay - now;
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        const revealElements = document.querySelectorAll("[data-reveal]");
+        function checkReveal() {
+            const triggerBottom = window.innerHeight * 0.9;
+            revealElements.forEach(el => {
+                const boxTop = el.getBoundingClientRect().top;
+                if (boxTop < triggerBottom) { el.classList.add("active"); }
+            });
+        }
+        window.addEventListener("scroll", checkReveal);
+        window.addEventListener("load", checkReveal);
+
+        let currentProduct = "";
+        function openModal(prod) {
+            currentProduct = prod;
+            document.getElementById('product-name-display').innerText = prod;
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target == modal) { closeModal(); }
+        }
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const wilaya = document.getElementById('wilaya').value;
+
+            if(!name || !phone || !wilaya) {
+                alert("جميلتي، يرجى ملء كافة البيانات لضمان توصيل طلبك بنجاح!");
+                return;
+            }
+
+            const myWhatsAppNumber = "213794440945"; 
+            const msg = `🛍️ *طلب جديد من الموقع*%0A---%0A📦 *المنتج:* ${currentProduct}%0A👤 *الاسم:* ${name}%0A📞 *الهاتف:* ${phone}%0A📍 *الولاية:* ${wilaya}%0A---%0A*يرجى تأكيد الطلب لشحنه في أقرب وقت.*`;
+            
+            window.location.href = `https://wa.me/${myWhatsAppNumber}?text=${msg}`;
+        }
+    </script>
+
+</body>
+</html>
